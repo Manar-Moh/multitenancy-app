@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tenant_user', function (Blueprint $table) {
-            $table->boolean('is_owner')->default(false);
+        Schema::create('projects', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            //$table->foreignId('tenant_id')->constrained();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tenant_user', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('projects');
     }
 };

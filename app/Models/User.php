@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Stancl\Tenancy\Database\Concerns\BelongsToTenant;
+use Stancl\Tenancy\Database\Concerns\CentralConnection;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-
+    use CentralConnection;
     /**
      * The attributes that are mass assignable.
      *
@@ -49,6 +51,6 @@ class User extends Authenticatable
 
     public function tenants(): BelongsToMany
     {
-        return $this->belongsToMany(Tenant::class)->withPivot('is_owner');
+        return $this->belongsToMany(Tenant::class);
     }
 }

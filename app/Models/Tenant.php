@@ -2,19 +2,33 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Stancl\Tenancy\Contracts\TenantWithDatabase;
+use Stancl\Tenancy\Database\Concerns\CentralConnection;
+use Stancl\Tenancy\Database\Concerns\HasDatabase;
+use Stancl\Tenancy\Database\Concerns\HasDomains;
+use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
+use Stancl\Tenancy\Database\Models\TenantPivot;
 
-class Tenant extends Model
+/**
+ * @method  __call(string $method, array $parameters)
+ * @method  __callStatic(string $method, array $parameters)
+ */
+class Tenant extends BaseTenant implements TenantWithDatabase
 {
-    use HasFactory;
-
+    use HasDatabase, HasDomains;
+    use CentralConnection;
     protected static $unguarded = true;
 
-    public function users(): BelongsToMany
+   public static function getCustomColumns(): array
+   {
+        return [
+            'name'
+        ];
+    }
+    protected $fillable = ['name'];
+    public function users()
     {
-        return $this->belongsToMany(User::class)->withPivot('is_owner');
+        return $this->belongsToMany(CentralUser::class, 'tenant_users', 'tenant_id', 'global_user_id', 'id', 'global_id')
+            ->using(TenantPivot::class);
     }
 }

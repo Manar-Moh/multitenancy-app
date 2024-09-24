@@ -20,11 +20,11 @@
                         {{ __('Projects') }}
                     </x-nav-link>
 
-                    @can('manage-users')
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
-                        {{ __('Users') }}
-                    </x-nav-link>
-                    @endcan
+{{--                    @can('manage-users')--}}
+{{--                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">--}}
+{{--                        {{ __('Users') }}--}}
+{{--                    </x-nav-link>--}}
+{{--                    @endcan--}}
                 </div>
             </div>
 
@@ -49,10 +49,16 @@
                         </x-dropdown-link>
 
                         @foreach (auth()->user()->tenants as $tenant)
-                            <x-dropdown-link :href="route('tenants.change', $tenant->id)" @class(['font-bold bg-emerald-300' => auth()->user()->current_tenant_id == $tenant->id])>
+                            <x-dropdown-link :href="route('tenants.change', $tenant->id)" >
                                 {{ $tenant->name }}
                             </x-dropdown-link>
                         @endforeach
+
+{{--                        @foreach (auth()->user()->tenants as $tenant)--}}
+{{--                            <x-dropdown-link :href="route('tenants.change', $tenant->id)" @class(['font-bold bg-emerald-300' => auth()->user()->current_tenant_id == $tenant->id])>--}}
+{{--                                {{ $tenant->name }}--}}
+{{--                            </x-dropdown-link>--}}
+{{--                        @endforeach--}}
 
 
                         <!-- Authentication -->

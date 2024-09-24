@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Stancl\Tenancy\Facades\Tenancy;
 
 class Projects extends Controller
 {

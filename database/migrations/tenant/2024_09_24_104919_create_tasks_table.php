@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tenants', function (Blueprint $table) {
-            $table->string('subdomain')->unique();
+        Schema::create('tasks', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->foreignId('project_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tenants', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('tasks');
     }
 };

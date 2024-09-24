@@ -45,7 +45,10 @@
         @empty($invitationEmail)
         <div class="mt-4">
             <x-input-label for="subdomain" :value="__('Subdomain')" />
-            <x-text-input id="subdomain" class="block mt-1 mr-2 w-full" type="text" name="subdomain" :value="old('subdomain')" required />
+            <div class="flex items-baseline">
+                <x-text-input id="subdomain" class="block mt-1 mr-2 w-full" type="text" name="subdomain" :value="old('subdomain')" required />
+                .{{ config('tenancy.central_domains')[0] }}
+            </div>
             <x-input-error :messages="$errors->get('subdomain')" class="mt-2" />
         </div>
         @endempty
