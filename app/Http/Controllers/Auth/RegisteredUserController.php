@@ -82,8 +82,8 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-//        $tenantDomain = str_replace('://', '://' . $tenant->subdomain . '.', config('app.url'));
-//        return redirect($tenantDomain . route('dashboard', absolute: false));
-        return redirect(route('dashboard', absolute: false));
+        $tenantDomain = str_replace('://', '://' . $tenant->subdomain . '.', config('app.url'));
+        return redirect($tenantDomain . route('dashboard', absolute: false));
+//        return redirect(route('dashboard', absolute: false));
     }
 }
